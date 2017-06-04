@@ -15,7 +15,7 @@ Problem 1
     WHERE 5000000 < (SELECT SUM(D2.budget)
                      FROM Dept D2
                      WHERE D2.managerid = D.managerid)
-                     
+
 4.  SELECT E.ename
     FROM Emp E, Dept D
     WHERE E.eid = D.managerid
