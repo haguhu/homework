@@ -1,0 +1,111 @@
+Problem 1
+1.  SELECT DISTINCT D.managerid
+    FROM Dept D
+    WHERE 1000000 < ALL (SELECT D2.budget
+                         FROM Dept D2
+                         WHERE D2.managerid = D.managerid)
+2.  SELECT E.ename
+    FROM Emp E
+    WHERE E.eid IN (SELECT D.managerid
+                   FROM Dept D
+                   WHERE D.budget = (SELECT MAX(D2.budget)
+                                     FROM Dept D2))
+3.  SELECT D.managerid
+    FROM Dept D
+    WHERE 5000000 < (SELECT SUM(D2.budget)
+                     FROM Dept D2
+                     WHERE D2.managerid = D.managerid)
+                     
+4.  SELECT E.ename
+    FROM Emp E, Dept D
+    WHERE E.eid = D.managerid
+    GROUP BY E.eid, E.ename
+    HAVING EVERY (D.budget > 1000000) AND ANY (D.budget > 5000000)
+    
+Problem 2
+1.  Select distinct MovieStar.sname 
+	from MovieStar, Movie, StarsIn
+	where MovieStar.SNo = StarsIn.SNo
+		and StarsIn.MNo = Movie.MNo
+		and Movie.profit > 100000000
+
+2.	select distinct MovieStar.sname
+	from MovieStar
+	where SNo in (select StarsIn.SNo
+					from StarsIn, Movie
+					where Count(StarsIn.SNo) > 2
+						and StarsIn.MNo  = Movie.MNo
+						and Movie.profit > 100000000
+					group by StarsIn.SNo)
+						
+3.	select distinct MovieStar.sname, Movie.title
+	from MovieStar, Movie, Director, StarsIn
+	where MovieStar.SNo = StarsIn.SNo
+		and StarsIn.MNo = Movie.MNo
+		and Movie.DNo = Director.DNo
+		and MovieStar.sname = Director.dname
+
+4.	select MovieStar.sname, avg(Movie.profit)
+	from MovieStar, Movie, StarsIn
+	where MovieStar.SNo = StarsIn.SNo
+		and StarsIn.MNo = Movie.MNo
+		and MovieStar.SNo in (select MovieStar.SNo
+							from MovieStar, Movie, StarsIn
+							where MovieStar.SNo = StarsIn.SNo
+								and StarsIn.MNo = Movie.MNo
+								and sum(Movie.profit) > 2000000
+							group by MovieStar.SNo)
+
+5.	select MovieStar.sname
+	from MovieStar
+	where MovieStar.SNo not exist (	select StarsIn.SNo
+									from StarsIn
+									where StarsIn.SNo = MovieStar.SNo
+										and StarsIn.MNo not exist (	select Movie.MNo
+																	from Movie, Studio
+																	where Movie.STNO = Studio.STNO
+																		and StarsIn.MNo = Movie.MNo)
+									)
+
+Problem 
+create table Emp(
+	eid		integer,
+	ename	char(20),
+	age		integer,
+	salary	real,
+	primary key (eid),
+	check (salary >= 1000));
+	
+create table Works(
+	eid		integer,
+	did		integer,
+	pct		integer,
+	primary key (eid, did)
+	FOREIGN KEY (eid) REFERENCES Emp(eid),
+	FOREIGN KEY (did) REFERENCES Dept(did),
+	check ( (select count(pct) from Works group by eid) <100 )
+	);
+	
+create table Dept(
+	did		integer,
+	dname	char(20),
+	budget	real,
+	managerid	integer,
+	primary key (did),
+	FOREIGN KEY (managerid) REFERENCES Emp(eid));
+	
+CREATE TRIGGER managerSalary 
+     after UPDATE ON Emp 
+     REFERENCING OLD AS oldTuple NEW as newTuple 
+FOR EACH ROW 
+WHEN (newTuple.salary > oldTuple.salary)
+BEGIN
+	update Emp
+	set salary = newTuple.salary
+	where Emp.id in (	select Dept.managerid
+						from Emp,Works,Dept
+						where newTuple.eid = Works.eid
+							and Works.did = Dept.did
+							and newTuple.eid = Emp.eid
+							and newTuple.salary > Emp.salary)
+END;
