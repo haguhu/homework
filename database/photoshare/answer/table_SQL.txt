@@ -15,11 +15,8 @@ CREATE TABLE friendship (
   	user_id1 INTEGER,      
   	user_id2 INTEGER, 
   	PRIMARY KEY (user_id1,user_id2), 
-  	CHECK ( user_id1 IN 
-  		(select user.user_id from user) AND
-  		user_id2 IN 
-  		(select user.user_id from user) AND 
-  		user_id1 <> user_id2 ) 
+  	FOREIGN KEY (user_id1) REFERENCES user(user_id), 
+  	FOREIGN KEY (user_id2) REFERENCES user(user_id)
   	);
 
 CREATE TABLE album (
@@ -28,15 +25,15 @@ CREATE TABLE album (
    	user_id    INTEGER,  
    	create_date Date, 
    	PRIMARY KEY (album_id),
-   	FOREIGN KEY (user_id) REFERENCES user
+   	FOREIGN KEY (user_id) REFERENCES user(user_id)
    	);
 
 CREATE TABLE own (
    	user_id INTEGER,      
    	album_id INTEGER, 
   	PRIMARY KEY (user_id, album_id), 
-  	FOREIGN KEY (user_id) REFERENCES user, 
-  	FOREIGN KEY (album_id) REFERENCES album);
+  	FOREIGN KEY (user_id) REFERENCES user(user_id), 
+  	FOREIGN KEY (album_id) REFERENCES album(album_id));
   	
 CREATE TABLE photo (
    	photo_id   INTEGER,
@@ -49,8 +46,8 @@ CREATE TABLE contain (
    	album_id INTEGER,      
    	photo_id INTEGER, 
   	PRIMARY KEY (album_id, photo_id), 
-  	FOREIGN KEY (album_id) REFERENCES album,
-  	FOREIGN KEY (photo_id) REFERENCES photo);
+  	FOREIGN KEY (album_id) REFERENCES album(album_id),
+  	FOREIGN KEY (photo_id) REFERENCES photo(photo_id));
   	
 CREATE TABLE tag (
    	tag_id   INTEGER,
@@ -63,8 +60,8 @@ CREATE TABLE associate (
    	photo_id INTEGER,      
    	tag_id INTEGER, 
   	PRIMARY KEY (photo_id, tag_id), 
-  	FOREIGN KEY (photo_id) REFERENCES photo,
-  	FOREIGN KEY (tag_id) REFERENCES tag);
+  	FOREIGN KEY (photo_id) REFERENCES photo(photo_id),
+  	FOREIGN KEY (tag_id) REFERENCES tag(tag_id));
   	
   	
 CREATE TABLE comment (
@@ -73,20 +70,20 @@ CREATE TABLE comment (
    	user_id    INTEGER,  
    	date Date, 
    	PRIMARY KEY (comment_id),
-   	FOREIGN KEY (user_id) REFERENCES user
+   	FOREIGN KEY (user_id) REFERENCES user(user_id)
    	);
    	
 CREATE TABLE about (
    	photo_id INTEGER,      
    	comment_id INTEGER, 
   	PRIMARY KEY (photo_id, comment_id), 
-  	FOREIGN KEY (photo_id) REFERENCES photo,
-  	FOREIGN KEY (comment_id) REFERENCES comment);
+  	FOREIGN KEY (photo_id) REFERENCES photo(photo_id),
+  	FOREIGN KEY (comment_id) REFERENCES comment(comment_id));
   	
   	
 CREATE TABLE leave (
    	user_id INTEGER,      
    	comment_id INTEGER, 
   	PRIMARY KEY (user_id, comment_id), 
-  	FOREIGN KEY (user_id) REFERENCES user,
-  	FOREIGN KEY (comment_id) REFERENCES comment);
+  	FOREIGN KEY (user_id) REFERENCES user(user_id),
+  	FOREIGN KEY (comment_id) REFERENCES comment(comment_id));
