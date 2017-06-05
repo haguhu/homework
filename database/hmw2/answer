@@ -109,3 +109,9 @@ BEGIN
 							and newTuple.eid = Emp.eid
 							and newTuple.salary > Emp.salary)
 END;
+
+Problem 3
+All candidate keys: AB   BCF  BCH
+3NF: ABCF ABE BFH FG AD 
+BCNF:ABC ABF ABE BFH FG AD 
+Both 3NF and BCNF are lossless join and dependency preserving.
