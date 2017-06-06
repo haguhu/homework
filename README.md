@@ -3,8 +3,8 @@
 from tuigeer
 
 
-Saboteur   800
-hmw1       800
-Geometric-Algorithms_hwk2  900
-hmw2       700
-photoshare 1500
+800   Saboteur   
+800   hmw1     
+900   Geometric-Algorithms_hwk2
+700   hmw2       
+1500  photoshare 
