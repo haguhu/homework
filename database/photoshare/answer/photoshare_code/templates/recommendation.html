@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Photoshare</title>
+</head>
+<body>
+
+	{% if message %}
+ 	<h1>{{message}}!</h1>
+	{% endif %}
+
+	{% if name %}
+  	<h2>Hello {{ name }}!</h2>
+	{% endif %}
+
+	{% if photos %}
+    <div>
+        <ul>
+    		{% for photo in photos %}
+
+        	<li>{{photo[2]}}<br>
+        	<img src='data:image/png;base64, {{photo[0]}}'/></li>
+        	<form method="post" action="/comment">
+ 			<button type="submit" name="submit" value='{{ photo[1] }}'>Comment</button>
+ 			</form>
+    		{% endfor %}
+    	</ul>
+    
+    </div>
+	
+    {% else %}
+    <h3>There is no photo :(</h3>
+    {% endif %}
+    
+
+
+	<ul>
+		<li><a href='/logout'>Logout</a></li>
+		<li><a href='/'>Home</a></li>
+	</ul>
+</body>
+</html>
+

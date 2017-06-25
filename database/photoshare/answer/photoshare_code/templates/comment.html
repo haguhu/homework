@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Comment</title>
+</head>
+<body>
+	<ul>
+		<li><a href='/'>Home</a></li>
+	</ul>
+
+	<h1>Comment Photo</h1>
+
+ 	{% if message %}
+ 		<p><em>{{ message }}</em></p>
+ 	{% endif %}
+
+	{% if photo %}
+	    <img src='data:image/png;base64, {{photo[0]}}'  />
+ 		<p >Caption: {{ photo[2] }}</p>
+ 		<form method="post" action="/comment">
+ 			
+ 				<button type="submit" name="like" value='{{ photo[1] }}'>Like</button>
+ 			
+ 		</form>	
+ 		{% if likes %}
+ 			{% if number %}
+ 				<p><strong>Likes</strong>: {{ number }}</p>
+ 			{% endif %}
+
+ 			<p>People who like this photo:</p>
+ 			<ul>
+ 				{% for like in likes%}
+ 				<li>{{ like }}</li>
+ 				{% endfor %}
+ 			</ul>
+ 		{% else %}
+ 			<p><strong>Likes</strong>: 0</p>
+ 		{% endif %} 	
+
+		<p><strong>Comments:</strong></p>
+ 		{% if comments %}
+ 			<ul>
+ 				{% for comment in comments%}
+ 				<li><em>'{{ comment[1] }}'</em> commented by {{ comment[0] }} on {{ comment[2] }}</li>
+ 				{% endfor %}
+ 			</ul>
+ 		{% endif %}
+ 		
+ 		<form method="post" action="/comment">
+ 			<center>
+ 				<input type="text" name="comment" placeholder="leave your" required="true"/>
+ 				<button type="submit" name="submit" value='{{ photo[1] }}'>Comment</button>
+ 			</center>
+ 		</form>
+ 	{% endif %}
+</body>
+</html>
