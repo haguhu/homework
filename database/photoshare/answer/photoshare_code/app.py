@@ -1,5 +1,6 @@
 ######################################
 # author ben lawson <balawson@bu.edu> 
+# edited by: Heming Cheng
 ######################################
 # Some code adapted from 
 # CodeHandBook at http://codehandbook.org/python-web-application-development-using-flask-and-mysql/
