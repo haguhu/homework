@@ -9,3 +9,4 @@ from tuigeer
 700   hmw2       
 1500  photoshare        
 900   hmw3
+300   database exam
