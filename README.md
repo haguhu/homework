@@ -11,5 +11,4 @@ from tuigeer
 900   hmw3    
 300   database exam
 
-
-1000 土石方运输卡车分配问题
+700   homework2 -- AI
