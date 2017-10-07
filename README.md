@@ -11,4 +11,4 @@ from tuigeer
 900   hmw3    
 300   database exam
 
-700   homework2 -- AI
+1000   prac2-turning machine
