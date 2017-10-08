@@ -11,4 +11,5 @@ from tuigeer
 900   hmw3    
 300   database exam
 
-1000   prac2-turning machine
+1000  prac2-turning machine
+700   pacman 
