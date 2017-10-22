@@ -14,3 +14,4 @@ from tuigeer
 1000  prac2-turning machine   
 700   pacman   
 1300  project 1(indexed color)   
+1300  operate system--stoplight
