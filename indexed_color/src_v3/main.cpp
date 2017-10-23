@@ -1,4 +1,6 @@
-
+/**
+ * the main function
+ */
 
 #include "Image.h"
 #include <stdlib.h>
@@ -27,14 +29,13 @@ int main(void)
 
 
    infile >> im;
-   //im.convertToIndexed();
+      
    int algorithmSelected;
    cout << "Please select the algorithm which you want to run with (input 1 for popularity and 2 for uniform partitioning)" << endl;
    cin >> algorithmSelected;
    if(algorithmSelected == 1){
 	cout<< "run with popularity algorithm " <<endl;
-	//Append Indexed.raw to the input file name to create the
-   	//output file name
+	//Append Indexed_popularity.bmp to the output file name
    	pos = fileName.find('.');
    	fileName.replace(pos, fileName.length()-1, "Indexed_popularity.bmp");
    	outFile.open(fileName.c_str(), ios::out|ios::binary);
@@ -45,6 +46,7 @@ int main(void)
 	im.convertToIndexedByPopularity();
    }else if (algorithmSelected == 2){
 	cout<< "run with uniform partitioning algorithm" <<endl;
+	//Append Indexed_partitioning.bmp to the output file name
    	pos = fileName.find('.');
    	fileName.replace(pos, fileName.length()-1, "Indexed_partitioning.bmp");
    	outFile.open(fileName.c_str(), ios::out|ios::binary);

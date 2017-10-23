@@ -1,8 +1,12 @@
-
+/**
+ * define RGB struct and 
+ * the compare function which used in popularity algorithm's map
+ */
 
 #ifndef RGB_
 #define RGB_
 
+// the RGB struct
 typedef struct RGB_struct {
   unsigned char r;
   unsigned char g;
@@ -10,6 +14,7 @@ typedef struct RGB_struct {
 
 }  RGB;
 
+// RGB compare function used in popularity algorithm's map
 struct RGBcomp {
   bool operator() (const RGB& lhs, const RGB& rhs) const
   {

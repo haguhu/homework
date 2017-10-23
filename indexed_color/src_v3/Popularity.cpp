@@ -1,4 +1,6 @@
-
+/**
+ * the implementation of the popularity algorithm
+ */
 
 #include "Popularity.h"
 #include <math.h>
@@ -7,7 +9,7 @@
 using namespace std;
 
 
-
+//store all the colors in the image
 void Popularity::insertColor(RGB color) {
 	map<RGB,int,RGBcomp>::iterator it;
 	it = colorMap.find(color);
@@ -18,7 +20,7 @@ void Popularity::insertColor(RGB color) {
 	}
 
 }
-
+//using popularity algorithm to build the color table
 void Popularity::putInTable(RGB colorTable[]) {
 	map<RGB,int,RGBcomp>::iterator it;
 	
@@ -40,7 +42,7 @@ void Popularity::putInTable(RGB colorTable[]) {
 	
 }
 
-
+//find color in the color table
 unsigned char Popularity::findColor(unsigned char rBits, unsigned char gBits, unsigned char bBits,RGB colorTable[])
 {
 	int result[256];

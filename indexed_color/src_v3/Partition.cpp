@@ -1,4 +1,6 @@
-
+/**
+ * the implementation of the partition algorithm
+ */
 
 #include "Partition.h"
 #include <math.h>
@@ -17,14 +19,15 @@ Partition::Partition(){
 	int numberInOneSliceB =0;
 }
 
+//store all the colors in the image
 void Partition::insertColor(RGB color) {
-	//cout<< "color.r: "<< (unsigned int)color.r<<endl;
-        vectorR.push_back(color.r);
+    vectorR.push_back(color.r);
 	vectorG.push_back(color.g);
 	vectorB.push_back(color.b);
 
 }
 
+//using partition algorithm to build the color table
 void Partition::putInTable(RGB colorTable[]) {
 	// 8 * 8 * 4
 	sort(vectorR.begin(), vectorR.end());
@@ -93,15 +96,11 @@ void Partition::putInTable(RGB colorTable[]) {
 		colorTable[i].g = slicesG[gDim];
 		int bDim = i % (1<<2);
 		colorTable[i].b = slicesB[bDim];
-
-//cout<< "number i = " <<i << "  rDim = " << rDim << "slicesR[rDim]"   << slicesR[rDim] << endl;
-//cout<< "number i = " <<i << "  gDim = " << gDim << "slicesG[gDim]"   << slicesG[gDim] << endl;
-//cout<< "number i = " <<i << "  bDim = " << bDim << "slicesB[bDim]"   << slicesB[bDim] << endl;
 	} 
 	
 }
 
-
+//find color in the color table
 unsigned char Partition::findColor(unsigned char rBits, unsigned char gBits, unsigned char bBits,RGB colorTable[])
 {
 
@@ -111,13 +110,6 @@ unsigned char Partition::findColor(unsigned char rBits, unsigned char gBits, uns
 	if(gDim ==8) gDim --;
 	int bDim = (((int)bBits - vectorB[0]) / numberInOneSliceB );
 	if(bDim ==4) bDim --;
-//	cout << "\nrBits: "<<(int)rBits <<endl;
-	//cout << "vectorR[0]: "<< vectorR[0] <<endl;
-//cout << "numberInOneSliceR: "<< numberInOneSliceR <<endl;
-//cout << "rDim: "<< rDim <<endl;
-//cout <<"result1--------" << (rDim<<5+gDim<<2+bDim )<<endl;
-//cout <<"result2--------" << (rDim<<5)+(gDim<<2)+bDim <<endl;
-	//cout << "colorTable[rDim<<5+gDim<<2+bDim]: "<< (int)(colorTable[rDim<<5+gDim<<2+bDim].r) <<endl;
 	return (unsigned char)((rDim<<5)+(gDim<<2)+bDim );
 }
 

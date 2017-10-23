@@ -14,13 +14,13 @@ void printColorTable(RGB  colorTable[] ){
 
    }
 }
-
+//convert to indexed color using popularity algorithm
 void Image::convertToIndexedByPopularity(void) {
    Popularity popularity;
    RGB colorTable[256];
    unsigned char bitmapI[300][300];
 
-/* go through all pixels of the image to find the most popular colors */
+   /* go through all pixels of the image to find the most popular colors */
    for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
  	 RGB color;
@@ -39,10 +39,11 @@ void Image::convertToIndexedByPopularity(void) {
    for (int i = 0; i < height; i++) 
       for (int j = 0; j < width; j++) 
          bitmapI[i][j] = popularity.findColor(bitmap.R[i][j], bitmap.G[i][j], bitmap.B[i][j],colorTable);
-//Write the heading, color table, and indexed bitmap to the .bmp indexed file
+   //Write the heading, color table, and indexed bitmap to the .bmp indexed file
    createIndexedFile(colorTable, bitmapI);
 }
 
+//convert to indexed color using partition algorithm
 void Image::convertToIndexedByUP(void) {
    Partition partition;
    unsigned char rBits, gBits, bBits;
@@ -50,7 +51,7 @@ void Image::convertToIndexedByUP(void) {
    RGB colorTable[256];
    unsigned char bitmapI[300][300];
 
-/* go through all pixels of the image to create the box */
+   /* go through all pixels of the image to create the box */
    for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
  	 RGB color;
@@ -63,14 +64,15 @@ void Image::convertToIndexedByUP(void) {
    }
 
    partition.putInTable(colorTable);
-printColorTable(colorTable);
+   printColorTable(colorTable);
    for (int i = 0; i < height; i++) 
       for (int j = 0; j < width; j++) 
          bitmapI[i][j] = partition.findColor(bitmap.R[i][j], bitmap.G[i][j], bitmap.B[i][j], colorTable);
-//Write the heading, color table, and indexed bitmap to the .bmp indexed file
+   //Write the heading, color table, and indexed bitmap to the .bmp indexed file
    createIndexedFile(colorTable, bitmapI);
 }
 
+//create the indexed color file
 void Image::createIndexedFile(RGB colorTable[], unsigned char bitmapI[][300]) {
    char b;
    char m;
@@ -140,6 +142,7 @@ are multiples of 4 bytes.  They are in this case.  A line is
    	 outFile.write(reinterpret_cast<char *>(&bitmapI[i][j]), 1);   
 }
 
+// redefine the operator >>
 istream& operator>>(istream& in, Image& x)
 {
    in >> x.bitmap;

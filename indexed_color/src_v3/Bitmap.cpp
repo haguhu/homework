@@ -3,6 +3,7 @@
 //#include "math.h"
 #include "Bitmap.h"
 
+//redifined the operator >>
 istream& operator>>(istream& in, Bitmap& x)
 {
    x.cols = 300;
