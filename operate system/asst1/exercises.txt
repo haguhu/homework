@@ -1,0 +1,3 @@
+1. When there are many cars arrived first in one direction and there are few cars arrived later in another direction, the few cars will have to wait for long time.
+
+2. When there are four cars arrived at the intersection and they turn left in the same time, there will be a deadlock.
