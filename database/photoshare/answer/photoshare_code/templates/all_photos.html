@@ -1,0 +1,81 @@
+<!-- author: Heming Cheng -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Photoshare</title>
+</head>
+<body>
+	<h1>View All Photos</h1>
+
+	{% if message %}
+ 	<h1>{{message}}!</h1>
+	{% endif %}
+
+	{% if name %}
+  	<h2>Hello {{ name }}!</h2>
+	{% endif %}
+
+	{% if photos %}
+	<h3>View all photos:</h3>
+    <div>
+        <ul>
+    		{% for photo in photos %}
+
+        	<li>{{photo[2]}}<br>
+        	<img src='data:image/png;base64, {{photo[0]}}'/></li>
+        	<form method="post" action="/comment">
+ 			<button type="submit" name="submit" value='{{ photo[1] }}'>Comment</button>
+ 			</form>
+    		{% endfor %}
+    	</ul>
+    
+    </div>
+	
+	<h3>Search photos by tag(s):</h3>
+	<form method="post" action="/">
+        <input type="text" name="tags" required="true" placeholder="one or more tags" />
+        <input  type="submit" name='submit' value="search" />
+    </form>
+    {% else %}
+    <h3>There is no photo :(</h3>
+    {% endif %}
+    
+
+	{% if active %}
+		<h3>Top 10 Active Users:</h3>
+		<ol>
+			{% for user in active %}
+				<li>{{ user[0] }}, contribution: {{ user[1] }}</li>
+			{% endfor %}
+		</ol>
+	{% endif %}
+
+	{% if tags %}
+    	<h3>View all tags:</h3>
+        <ul>
+            {% for tag in tags %}
+            <!-- links to a page shows all photos tagged with that tag -->
+            <a href='/tag?tag=10{{ tag }}'><li>{{ tag }}</li></a> 
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+	{% if poptags %}
+		<h3>View the most popular tags:</h3>
+        <ul>
+            {% for tag in poptags %}
+            <!-- links to a page shows all photos tagged with that tag -->
+            <a href='/tag?tag=10{{ tag }}'><li>{{ tag }}</li></a> 
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
+
+	<ul>
+		<li><a href='/logout'>Logout</a></li>
+		<li><a href='/'>Home</a></li>
+	</ul>
+</body>
+</html>
+
